@@ -1,15 +1,17 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require('../src/models/User');
+const Driver = require('../src/models/Driver');
 
 const initializePassport = passport => {
   const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
 
   passport.use(
+    'user',
     new GoogleStrategy(
       {
         clientID: GOOGLE_CLIENT_ID,
         clientSecret: GOOGLE_CLIENT_SECRET,
-        callbackURL: '/auth/google/callback',
+        callbackURL: '/auth/google/user/callback',
       },
       async (_accessToken, _refreshToken, profile, done) => {
         const {
@@ -43,11 +45,51 @@ const initializePassport = passport => {
     )
   );
 
+  passport.use(
+    'driver',
+    new GoogleStrategy(
+      {
+        clientID: GOOGLE_CLIENT_ID,
+        clientSecret: GOOGLE_CLIENT_SECRET,
+        callbackURL: '/auth/google/driver/callback',
+      },
+      async (_accessToken, _refreshToken, profile, done) => {
+        const {
+          id,
+          displayName,
+          emails: [emails],
+          photos: [photos],
+        } = profile;
+
+        const newDriver = {
+          googleId: id,
+          displayName,
+          email: emails.value,
+          image: photos.value,
+        };
+
+        try {
+          let driver = await Driver.findOne({ googleId: id });
+
+          if (driver) {
+            done(null, driver);
+          } else {
+            driver = await Driver.create(newDriver);
+            done(null, driver);
+          }
+        } catch (error) {
+          done(error);
+          console.log(error);
+        }
+      }
+    )
+  );
+
   passport.serializeUser((user, done) => done(null, user.id));
 
   passport.deserializeUser(async (id, done) => {
     try {
-      const user = await User.findById(id);
+      const user = (await User.findById(id)) || (await Driver.findById(id));
       return done(null, user);
     } catch (error) {
       return console.error(error);

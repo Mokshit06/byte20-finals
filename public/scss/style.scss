@@ -9,12 +9,24 @@
   src: url('/fonts/Sf_pro.ttf');
 }
 
+@font-face {
+  font-family: 'Product Sans Reg';
+  src: url('/fonts/Product_Sans_Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Product Sans Bold';
+  src: url('/fonts/Product_Sans_Bold.ttf');
+}
+
 a {
   text-decoration: none;
 }
 
 body {
-  font-family: 'SF Pro', sans-serif;
+  font-family: 'Product Sans Reg', sans-serif;
+  min-height: 100vh;
+  line-height: 1.6;
 }
 
 @import '_header';

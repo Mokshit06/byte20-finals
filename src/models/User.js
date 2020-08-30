@@ -25,6 +25,10 @@ const UserSchema = new mongoose.Schema({
       },
     },
   ],
+  address: {
+    type: String,
+    required: true,
+  },
   availableTime: {
     from: {
       type: Number,
@@ -32,6 +36,18 @@ const UserSchema = new mongoose.Schema({
     to: {
       type: Number,
     },
+  },
+  location: [
+    {
+      type: Number,
+    },
+    {
+      type: Number,
+    },
+  ],
+  price: {
+    type: Number,
+    default: 400,
   },
 });
 

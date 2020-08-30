@@ -1,11 +1,151 @@
-.container {
-  max-width: 1130px;
-  margin: 0 auto;
+.inline {
+  display: flex;
 }
 
 .sidebar {
-  width: 35%;
+  width: 27%;
+  background: #f8f8f8;
+  min-height: calc(100vh - 7.2vh);
 
-  .img {
+  .center {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.8rem 1.2rem;
+    font-size: 1.2rem;
+    color: #fff;
+    font-weight: 300;
+    border-bottom: 0.4px solid #edf0f5;
+    border-top: 0.4px solid #edf0f5;
+
+    i {
+      margin: 0 1.4rem;
+      color: #3e4958;
+    }
+
+    p {
+      color: #3e4958;
+      flex: 1;
+    }
+  }
+
+  .active {
+    border-left: 8px solid #576272;
+    padding-left: calc(1.2rem - 8px);
+  }
+
+  .img-container {
+    padding: 2rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .img {
+      width: 80px;
+      border-radius: 50%;
+      height: 80px;
+      background-position: center;
+      background-size: cover;
+    }
+  }
+}
+
+.overview {
+  padding: 2.5rem 3rem;
+  width: calc(100% - 27%);
+
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-family: 'Product Sans Bold', sans-serif;
+    letter-spacing: 1px;
+  }
+
+  h3 {
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+  }
+
+  #edit-form {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin-bottom: 5vh;
+
+    label {
+      display: flex;
+      flex-direction: column;
+      margin: 0.5rem 0;
+
+      span {
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        color: #3e4958;
+        font-weight: 600;
+        letter-spacing: 1px;
+        padding: 0.3rem;
+        margin-bottom: 0.3rem 0;
+      }
+
+      input {
+        outline: none;
+        font-size: 1.1rem;
+        padding: 0.9rem;
+        border-radius: 0.8rem;
+        color: #3e4958;
+        background: #f7f8f9;
+        border: 0.5px solid #d5dde0;
+
+        &:disabled {
+          color: #8b8f94;
+        }
+      }
+    }
+
+    button {
+      background: #3e4958;
+      border: none;
+      color: #fff;
+      margin-top: 1rem;
+      padding: 1.2rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+      border-radius: 0.8rem;
+    }
+  }
+
+  .user-info {
+    width: 100%;
+    .field {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      border-bottom: 0.5px solid #e8ebf0;
+
+      p {
+        width: 50%;
+        font-size: 1.2rem;
+      }
+
+      .field-name {
+        color: #a1a6ad;
+      }
+
+      .field-value {
+        color: #3e4958;
+      }
+    }
+  }
+
+  .delete-btn {
+    margin: 2rem 0;
+    background: rgb(255, 69, 69);
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 0.8rem;
+    color: #fff;
+    font-size: 1.16rem;
+    cursor: pointer;
   }
 }

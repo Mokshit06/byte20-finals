@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
   <title>Document</title>
 </head>
 
@@ -12,9 +13,68 @@
 
   <%- include('../partials/header.ejs') %>
 
-  <main class="container">
+  <!-- <main class="container"> -->
+  <div class="inline">
     <%- include('../partials/sidebar.ejs') %>
-  </main>
+
+    <div class="overview">
+      <h1>Account Overview</h1>
+
+      <h3>Profile</h3>
+
+      <div class="user-info">
+        <div class="field">
+          <p class="field-name">Name</p>
+          <p class="field-value"><%= user.displayName %></p>
+        </div>
+        <div class="field">
+          <p class="field-name">Email</p>
+          <p class="field-value"><%= user.email %></p>
+        </div>
+        <% if (user.location) { %>
+        <div class="field">
+          <p class="field-name">Address</p>
+          <p class="field-value"><%= user.address %></p>
+        </div>
+        <% } %>
+        <div class="field">
+          <p class="field-name">Hospitals near house</p>
+          <p class="field-value">
+            <%= user.hospitals.map(hospital => hospital.name).join(', ') %>
+          </p>
+        </div>
+        <% if (user.location) { %>
+        <div class="field">
+          <p class="field-name">Subscription Cost</p>
+          <p class="field-value"><%= user.price %> </p>
+        </div>
+        <% } %>
+        <% if (user.training) { %>
+        <div class="field">
+          <p class="field-name">Available from</p>
+          <p class="field-value"><%= user.availableTime.from %> </p>
+        </div>
+        <div class="field">
+          <p class="field-name">Available Till</p>
+          <p class="field-value"><%= user.availableTime.to %> </p>
+        </div>
+        <% } %>
+      </div>
+
+      <button class="delete-btn" id="delete">Delete Profile</button>
+    </div>
+  </div>
+
+  <script>
+    document.querySelector('#overview').classList.add('active')
+    document.querySelector('#delete').addEventListener('click', async () => {
+      await fetch('/account/overview', {
+        method: 'DELETE'
+      })
+      console.log('Deleted')
+      location.href = '/';
+    })
+  </script>
 </body>
 
 </html>

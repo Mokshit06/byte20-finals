@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+  <title>Document</title>
+</head>
+
+<body class="account">
+
+  <%- include('../partials/header.ejs') %>
+
+  <div class="inline">
+    <%- include('../partials/sidebar.ejs') %>
+
+    <div class="overview">
+      <h1>Edit Profile</h1>
+
+      <form id="edit-form">
+        <div class="img"></div>
+        <label>
+          <span>Name</span>
+          <input type="text" id="name" value="<%= user.displayName %>" required>
+        </label>
+        <% if (user.location) { %>
+        <label>
+          <span>Address</span>
+          <input type="text" id="address" value="<%= user.address %>" required>
+        </label>
+        <% } %>
+        <label>
+          <span>Hospitals near your house</span>
+          <input type="text" id="hospitals" value="<%= user.hospitals.map(hospital => hospital.name).join(', ') %>"
+            required>
+        </label>
+        <% if(user.training) { %>
+        <label>
+          <span>Available from</span>
+          <input id="from" type="time" value="<%= user.availableTime.from %>" required>
+        </label>
+        <label>
+          <span>Available to</span>
+          <input id="to" type="time" value="<%= user.availableTime.to %>" required>
+        </label>
+        <% } %>
+
+        <button type="submit">Save Profile</button>
+      </form>
+    </div>
+  </div>
+
+
+  <script>
+    document.querySelector('#edit').classList.add('active')
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+
+      const name = document.querySelector('#name').value;
+      const hospitals = document.querySelector('#hospitals').value.split(',').map(hospital => hospital.trim());
+      <% if (user.training) { %>
+        const from = document.querySelector('#from').value;
+        const to = document.querySelector('#to').value;
+      <% } else { %>
+        const address = document.querySelector('#address').value;
+      <% } %>
+      const body = {
+        name,
+        hospitals: hospitals.map(hospital => ({ name: hospital })),
+        <% if (user.training) { %>
+        availableTime: {
+          from,
+            to
+        },
+        <% } else { %>
+        address,
+        <% } %>
+      }
+
+    await fetch('/account/profile', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
+
+    location.href = '/account/overview'
+    }
+
+    document.querySelector('#edit-form').addEventListener('submit', handleSubmit)
+  </script>
+</body>
+
+</html>

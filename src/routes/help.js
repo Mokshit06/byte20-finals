@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const User = require('../models/User');
+// const User = require('../models/User');
+const Driver = require('../models/Driver');
 const Help = require('../models/Help');
 const { sendAlertEmail } = require('../utils/emails');
 
@@ -12,29 +13,29 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   const { hospital, emergencyType } = req.body;
 
-  const usersWithinRange = await User.find({
+  const driversWithinRange = await Driver.find({
     'hospitals.hospital': {
       $regex: hospital,
       $options: 'i',
     },
   });
 
-  if (usersWithinRange.length < 1) {
+  if (driversWithinRange.length < 1) {
     return res.send({
-      message: 'Sorry, no users in that area',
+      message: 'Sorry, no drivers in that area',
     });
   }
 
   const help = await Help.create({
     emergencyType,
     user: req.user.id,
-    informedUsers: usersWithinRange,
+    informedUsers: driversWithinRange,
     hospital,
   });
 
-  usersWithinRange.forEach(user => {
+  driversWithinRange.forEach(driver => {
     sendAlertEmail({
-      email: user.email,
+      email: driver.email,
       name: req.user.displayName,
       hospital,
       id: help.id,
@@ -42,7 +43,7 @@ router.post('/', async (req, res) => {
   });
 
   res.send({
-    message: 'Your response has been sent to the users in that area',
+    message: 'Your response has been sent to the drivers in that area',
   });
 });
 

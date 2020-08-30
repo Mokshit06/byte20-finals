@@ -1,14 +1,42 @@
 <div class="sidebar">
-  <div class="img">
-    <img src="<%= user.image %> " alt="">
+  <div class="img-container">
+    <div class="img" style="background-image: url('<%= user.image %>');">
+    </div>
   </div>
   <a href="/account/overview">
-    <p>Account overview</p>
+    <div class="center" id="overview">
+      <i class="fas fa-home"></i>
+      <p>Account overview</p>
+    </div>
   </a>
   <a href="/account/profile">
-    <p>Edit profile</p>
+    <div class="center" id="edit">
+      <i class="fas fa-user-edit"></i>
+      <p>Edit profile</p>
+    </div>
   </a>
-  <a href="/account/notifications">
-    <p>Notification settings</p>
+  <a href="#">
+    <div class="center">
+      <i class="fas fa-bell"></i>
+      <p>Notification settings</p>
+    </div>
+  </a>
+  <a href="#">
+    <div class="center">
+      <i class="fas fa-lock"></i>
+      <p>Privacy settings</p>
+    </div>
+  </a>
+  <a href="#">
+    <div class="center">
+      <i class="fas fa-car"></i>
+      <p>Your rides</p>
+    </div>
+  </a>
+  <a href="#">
+    <div class="center">
+      <i class="fas fa-percent"></i>
+      <p>Offers</p>
+    </div>
   </a>
 </div>

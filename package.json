@@ -20,7 +20,8 @@
     "mongoose": "^5.10.2",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",
-    "passport-google-oauth20": "^2.0.0"
+    "passport-google-oauth20": "^2.0.0",
+    "stripe": "^8.90.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

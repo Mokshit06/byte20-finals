@@ -1,18 +1,39 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const { ensureAuthenticated, ensureGuest } = require('../../middleware/auth');
+const { ensureAuth, ensureGuest } = require('../middleware/auth.js');
 
 router.get(
-  '/google',
-  passport.authenticate('google', {
+  '/google/user',
+  ensureGuest,
+  passport.authenticate('user', {
     scope: ['profile', 'email'],
   })
 );
 
 router.get(
-  '/google/callback',
-  passport.authenticate('google', {
+  '/google/driver',
+  ensureGuest,
+  passport.authenticate('driver', {
+    scope: ['profile', 'email'],
+  })
+);
+
+router.get(
+  '/google/user/callback',
+  ensureGuest,
+  passport.authenticate('user', {
+    failureRedirect: '/',
+  }),
+  (req, res) => {
+    res.redirect('/');
+  }
+);
+
+router.get(
+  '/google/driver/callback',
+  ensureGuest,
+  passport.authenticate('driver', {
     failureRedirect: '/',
   }),
   (req, res) => {
@@ -21,13 +42,13 @@ router.get(
       req.user.availableTime.from &&
       req.user.availableTime.to
     ) {
-      res.redirect('/dashboard');
+      res.redirect('/');
     }
-    res.redirect('/users/data');
+    res.redirect('/account/profile');
   }
 );
 
-router.get('/logout', (req, res) => {
+router.get('/logout', ensureAuth, (req, res) => {
   req.logout();
   res.redirect('/');
 });

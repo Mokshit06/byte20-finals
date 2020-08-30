@@ -15,6 +15,7 @@ const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
 const helpRouter = require('./routes/help');
 const accountRouter = require('./routes/account');
+const { ensureDataEntered, ensureAuth } = require('./middleware/auth');
 
 connectToDb();
 initializePassport(passport);
@@ -48,8 +49,8 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/users', userRouter);
-app.use('/help', helpRouter);
-app.use('/account', accountRouter);
+app.use('/help', ensureDataEntered, helpRouter);
+app.use('/account', ensureAuth, accountRouter);
 
 const PORT = process.env.PORT || 3000;
 
