@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>User Info</title>
+</head>
+
+<body>
+  <form id="form">
+    <label>
+      <span>Name</span>
+      <input type="text" id="name" value="<%= user.displayName %>">
+    </label>
+    <label>
+      <span>Email</span>
+      <input type="text" disabled value="<%= user.email %>">
+    </label>
+    <label>
+      <span>Profile Image</span>
+      <img src="<%= user.image %>">
+    </label>
+    <label>
+      <span>Hospitals</span>
+      <input id="hospitals" type="text">
+    </label>
+    <label>
+      <span>Available from</span>
+      <input id="availableFrom" type="text">
+    </label>
+    <label>
+      <span>Available till</span>
+      <input id="availableTo" type="text">
+    </label>
+
+    <% if (user.hospitals.length > 0) { %>
+    <button type="submit">Update profile</button>
+    <% } else { %>
+    <button type="submit">Add info</button>
+    <% } %>
+  </form>
+
+  <script>
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+
+      const name = document.querySelector('#name').value
+      const hospitals = document.querySelector('#hospitals').value.split(',').map(hospital => hospital.trim())
+      const availableFrom = document.querySelector('#availableFrom').value
+      const availableTo = document.querySelector('#availableTo').value
+
+      await fetch('/users/data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name,
+          hospitals,
+          availableTime: {
+            from: availableFrom,
+            to: availableTo
+          }
+        })
+      })
+    }
+
+    document.querySelector('#form').addEventListener('submit', handleSubmit)
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <%- include('../partials/header.ejs') %>
+
+  <div class="help-container">
+    <div class="form">
+      <h2>Help</h2>
+      <form id="form">
+        <label>
+          <span>Where from?</span>
+          <input type="text" id="curr-location">
+        </label>
+        <label>
+          <span>Nearest Hospital</span>
+          <input type="text" id="hospital">
+        </label>
+        <div>
+          <button>Normal</button>
+          <button>Medium</button>
+          <button>Extreme</button>
+        </div>
+        <label>
+          <span>Symptoms / Comments</span>
+          <input type="text">
+        </label>
+
+        <button type="submit">Ask for Help</button>
+      </form>
+    </div>
+    <div class="map">
+      <h2>Map</h2>
+      <div id="map"></div>
+    </div>
+  </div>
+
+  <script>
+    const locationPlace = document.querySelector('#location')
+
+    // navigator.geolocation.getCurrentPosition(({ coords }) => {
+    //   locationPlace.innerText = `(${coords.latitude}, ${coords.longitude})`
+    // })
+  </script>
+</body>
+
+</html>
