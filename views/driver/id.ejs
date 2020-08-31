@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="<%= driver.image %> ">
+  <link rel="stylesheet" href="/css/style.css">
+  <title><%= driver.displayName %> | MedPool</title>
+</head>
+
+<body>
+
+  <%- include('../partials/header.ejs') %>
+
+  <div class="container">
+    <div class="left-section">
+      <div class="top">
+        <h1><%= driver.displayName.split(' ')[0] %>'s Info</h1>
+        <div class="user-info">
+          <div class="field">
+            <p class="field-name">Name</p>
+            <p class="field-value"><%= driver.displayName %></p>
+          </div>
+          <div class="field">
+            <p class="field-name">Email</p>
+            <p class="field-value">
+              <%= driver.email %>
+            </p>
+          </div>
+          <div class="field">
+            <p class="field-name">Hospitals near house</p>
+            <p class="field-value"><%= driver.hospitals.map(hospital => hospital.name).join(', ') %></p>
+          </div>
+          <div class="field">
+            <p class="field-name">Training</p>
+            <p class="field-value">
+              <% if (driver.training.length > 0) { %>
+              <%= driver.trainings.join(', ') %>
+              <% } else { %>
+              No trainings done yet!
+              <% } %>
+            </p>
+          </div>
+          <div class="field">
+            <p class="field-name">Available from</p>
+            <p class="field-value"><%= driver.availableTime.from %></p>
+          </div>
+          <div class="field">
+            <p class="field-name">Available till</p>
+            <p class="field-value"><%= driver.availableTime.to %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="right-section">
+      <h3>Statistics</h3>
+      <canvas style="margin-top: 4vh" id="stats-chart" width="400" height="400"></canvas>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
+    integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg=="
+    crossorigin="anonymous"></script>
+  <script src="/js/app.js"></script>
+  <script>
+    const ridesGiven = <%= ridesGiven %>;
+    const ridesDone = <%= ridesDone %>;
+    const ridesNotDone = ridesGiven - ridesDone;
+
+    const ctx = document.querySelector('#stats-chart').getContext('2d');
+    const statsChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: ['Rides Completed', 'Rides Not Done'],
+        datasets: [{
+          label: 'No. of Rides',
+          data: [ridesDone, ridesNotDone],
+          backgroundColor: [
+            '#1A2634',
+            '#FFCC00'
+          ],
+          borderWidth: 1
+        }]
+      }
+    })
+  </script>
+</body>
+
+</html>

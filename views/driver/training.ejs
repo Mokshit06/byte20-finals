@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Document</title>
+</head>
+
+<style>
+  .select {
+    outline: none;
+    font-size: 1.1rem;
+    padding: 0.9rem;
+    border-radius: 0.8rem;
+    color: #3e4958;
+    background: #f7f8f9;
+    border: 0.5px solid #d5dde0;
+  }
+</style>
+
+<body>
+  <%- include('../partials/header.ejs') %>
+
+  <div class="overview">
+    <h1>Get Certified</h1>
+    <form id="form" method="POST" action="/drivers/training" style="width: 60%">
+      <label>
+        <span>Choose a course</span>
+        <select class="select" name="course">
+          <option value="first aid">Fist Aid</option>
+          <option value="cpr">CPR</option>
+        </select>
+      </label>
+      <button type="submit">Start course</button>
+    </form>
+  </div>
+
+  <script src="/js/app.js"></script>
+</body>
+
+</html>

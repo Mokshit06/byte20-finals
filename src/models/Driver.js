@@ -28,7 +28,6 @@ const DriverSchema = new mongoose.Schema({
   training: [
     {
       type: String,
-      enum: ['cpr', 'first aid'],
     },
   ],
   hospitals: [

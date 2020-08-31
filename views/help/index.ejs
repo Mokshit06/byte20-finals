@@ -27,7 +27,14 @@
         </label>
         <label>
           <span>Nearest Hospital</span>
-          <input type="text" name="hospital" required>
+          <input type="text" list="hospitals" name="hospital" required>
+
+          <datalist id="hospitals">
+            <% hospitals.forEach(hospital => { %>
+            <option><%= hospital %></option>
+            <% }) %>
+          </datalist>
+
         </label>
         <div class="condition">
           <span>Medical condition</span>

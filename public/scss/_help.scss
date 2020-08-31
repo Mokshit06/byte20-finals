@@ -148,7 +148,7 @@
   }
 
   h2 {
-    font-size: 2.3rem;
+    font-size: 2rem;
   }
 
   #form {
@@ -264,6 +264,10 @@
   @media (max-width: 700px) {
     width: 90%;
     padding: 1.3rem;
+  }
+
+  h2 {
+    font-size: 2rem;
   }
 
   #map {

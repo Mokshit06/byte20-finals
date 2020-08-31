@@ -7,7 +7,15 @@ const Help = require('../models/Help');
 const { sendAlertEmail } = require('../utils/emails');
 
 router.get('/', async (req, res) => {
-  res.render('help/index');
+  let hospitalsArr = (await Driver.find({})).map(driver => driver.hospitals);
+
+  hospitalsArr = hospitalsArr.flat(1).map(hospital => hospital.name);
+
+  const hospitals = [...new Set(hospitalsArr)];
+
+  res.render('help/index', {
+    hospitals,
+  });
 });
 
 router.post('/', async (req, res) => {
@@ -60,9 +68,7 @@ router.post('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-    return res.status(404).send({
-      message: 'Page not found',
-    });
+    return res.render('404');
   }
 
   const help = await Help.findById(req.params.id).populate([
@@ -78,15 +84,11 @@ router.get('/:id', async (req, res) => {
   ]);
 
   if (!help) {
-    return res.status(404).send({
-      message: 'Page not found',
-    });
+    return res.render('404');
   }
 
   if (help.user.id != req.user.id) {
-    return res.status(404).send({
-      message: 'Page not found',
-    });
+    return res.render('404');
   }
 
   const informedUsers = help.informedUsers.map(user => user.driver.displayName);
@@ -112,9 +114,7 @@ router.get('/:id/do', async (req, res) => {
   ]);
 
   if (!help) {
-    return res.status(404).send({
-      message: 'Page not found',
-    });
+    return res.render('404');
   }
   const informedUsers = help.informedUsers.map(user => user.driver.displayName);
 
@@ -123,9 +123,7 @@ router.get('/:id/do', async (req, res) => {
       user => JSON.stringify(user.driver) === JSON.stringify(req.user)
     )
   ) {
-    return res.status(404).send({
-      message: 'Page not found',
-    });
+    return res.render('404');
   }
 
   res.render('help/do', {

@@ -14,6 +14,7 @@ const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
 const helpRouter = require('./routes/help');
 const accountRouter = require('./routes/account');
+const driverRouter = require('./routes/driver');
 const { ensureDataEntered, ensureAuth } = require('./middleware/auth');
 
 connectToDb();
@@ -50,6 +51,7 @@ app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/help', ensureAuth, ensureDataEntered, helpRouter);
 app.use('/account', ensureAuth, accountRouter);
+app.use('/drivers', driverRouter);
 
 const PORT = process.env.PORT || 3000;
 

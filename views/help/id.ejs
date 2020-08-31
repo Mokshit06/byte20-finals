@@ -34,6 +34,10 @@
             <p class="field-value"><%= informedUsers.join(', ') %></p>
           </div>
           <div class="field">
+            <p class="field-name">Address</p>
+            <p class="field-value"><%= help.user.address %></p>
+          </div>
+          <div class="field">
             <p class="field-name">Symptoms</p>
             <p class="field-value">
               <%= help.symptoms %>
@@ -49,12 +53,14 @@
       <div id="user-area">
         <% if(help.readyToHelp) { %>
         <div class="user-card">
-          <div class="img" style="background-image: url('<%= help.readyToHelp.image %>');"></div>
-          <h2><%= help.readyToHelp.displayName %></h2>
-          <p>Email: <%= help.readyToHelp.email %></p>
-          <% help.readyToHelp && help.readyToHelp.training && help.readyToHelp.training.forEach(training => { %>
-          <p>Qualified in: <% training %> </p>
-          <% }) %>
+          <a href="/drivers/<%= help.readyToHelp.id %>">
+            <div class="img" style="background-image: url('<%= help.readyToHelp.image %>');"></div>
+            <h2><%= help.readyToHelp.displayName %></h2>
+            <p>Email: <%= help.readyToHelp.email %></p>
+            <% help.readyToHelp && help.readyToHelp.training && help.readyToHelp.training.forEach(training => { %>
+            <p>Qualified in: <% training %> </p>
+            <% }) %>
+          </a>
         </div>
         <% } else { %>
         <p class="message">No driver has accepted the request yet!</p>
