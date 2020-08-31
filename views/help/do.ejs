@@ -50,12 +50,14 @@
       <div id="user-area">
         <% if(help.readyToHelp) { %>
         <div class="user-card">
-          <div class="img" style="background-image: url('<%= help.readyToHelp.image %>');"></div>
-          <h2><%= help.readyToHelp.displayName %></h2>
-          <p>Email: <%= help.readyToHelp.email %></p>
-          <% help.readyToHelp && help.readyToHelp.training && help.readyToHelp.training.forEach(training => { %>
-          <p>Qualified in: <% training %> </p>
-          <% }) %>
+          <a href="/drivers/<%= help.readyToHelp._id %>">
+            <div class="img" style="background-image: url('<%= help.readyToHelp.image %>');"></div>
+            <h2><%= help.readyToHelp.displayName %></h2>
+            <p>Email: <%= help.readyToHelp.email %></p>
+            <% help.readyToHelp && help.readyToHelp.training && help.readyToHelp.training.forEach(training => { %>
+            <p>Qualified in: <% training %> </p>
+            <% }) %>
+          </a>
         </div>
         <% } else { %>
         <p class="message">No driver has accepted the request yet!</p>
@@ -79,13 +81,10 @@
       const btn = document.querySelector('.button')
 
       const handleClick = async () => {
-        btn.innerText = 'Loading...'
         const dataJSON = await fetch('/help/<%= help._id %>/do', {
           method: 'POST'
         })
-        console.log(await dataJSON.json())
-        btn.innerText = 'Done!'
-        setTimeout(() => location.reload(), 1000)
+        setTimeout(() => location.reload(), 2000)
       }
 
       btn.addEventListener('click', handleClick)

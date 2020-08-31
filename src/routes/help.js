@@ -52,14 +52,14 @@ router.post('/', async (req, res) => {
     symptoms,
   });
 
-  console.log(help);
-
   driversWithinRange.forEach(driver => {
     sendAlertEmail({
       email: driver.email,
       name: req.user.displayName,
       hospital,
       id: help.id,
+      condition,
+      symptoms,
     });
   });
 
@@ -87,7 +87,7 @@ router.get('/:id', async (req, res) => {
     return res.render('404');
   }
 
-  if (help.user.id != req.user.id) {
+  if (help.user.id != req.user._id) {
     return res.render('404');
   }
 
@@ -120,7 +120,7 @@ router.get('/:id/do', async (req, res) => {
 
   if (
     !help.informedUsers.some(
-      user => JSON.stringify(user.driver) === JSON.stringify(req.user)
+      user => JSON.stringify(user.driver) == JSON.stringify(req.user)
     )
   ) {
     return res.render('404');

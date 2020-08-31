@@ -33,7 +33,7 @@
         </label>
         <% } %>
         <label>
-          <span>Hospitals near your house</span>
+          <span>Hospitals near your house (Comma seperated values)</span>
           <input type="text" id="hospitals" value="<%= user.hospitals.map(hospital => hospital.name).join(', ') %>"
             required>
         </label>

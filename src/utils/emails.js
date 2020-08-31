@@ -13,18 +13,19 @@ const sendWelcomeEmail = ({ email, name }) => {
   });
 };
 
-const sendAlertEmail = ({ email, name, hospital, id }) => {
+const sendAlertEmail = ({ email, name, hospital, id, condition, symptoms }) => {
   sgMail.send({
     to: email,
     from: masterEmail,
     subject: `${name} needs your help`,
     html: `
       <p>
-        ${name} needs your help right now. Her nearest hospital is ${hospital}.
+        ${name} needs your help right now. Her nearest hospital is ${hospital}. ${name} is in ${condition} condition.
+        <br />
+        Their symptoms are: ${symptoms}
       </p>
       <br />
-      <br />
-      <a href="http://localhost:3000/help/${id}/do">Click here</a> to help them`,
+      <a href="${process.env.MAIN_URL}/help/${id}/do">Click here</a> to help them`,
   });
 };
 

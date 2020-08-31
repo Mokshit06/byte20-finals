@@ -53,7 +53,7 @@
       <div id="user-area">
         <% if(help.readyToHelp) { %>
         <div class="user-card">
-          <a href="/drivers/<%= help.readyToHelp.id %>">
+          <a href="/drivers/<%= help.readyToHelp._id %>">
             <div class="img" style="background-image: url('<%= help.readyToHelp.image %>');"></div>
             <h2><%= help.readyToHelp.displayName %></h2>
             <p>Email: <%= help.readyToHelp.email %></p>
@@ -71,31 +71,31 @@
 
   <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
   <script>
-    const createUserCard = (user, help) => `
-        <div class="img" style="background-image: url('${user.image}');"></div>
-        <h2>${user.displayName}</h2>
-        <p>Email: ${user.email}</p>
-        ${user.training.map(training => `<p>Qualified in: ${training}</p>`)}
-    `
+    // const createUserCard = (user, help) => `
+    //     <div class="img" style="background-image: url('${user.image}');"></div>
+    //     <h2>${user.displayName}</h2>
+    //     <p>Email: ${user.email}</p>
+    //     ${user.training.map(training => `<p>Qualified in: ${training}</p>`)}
+    // `
 
 
-    const getData = async () => {
-      const dataJSON = await fetch(`/help/<%= help._id %>`, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+    // const getData = async () => {
+    //   const dataJSON = await fetch(`/help/<%= help._id %>`, {
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     }
+    //   })
 
-      const { help: data } = await dataJSON.json();
+    //   const { help: data } = await dataJSON.json();
 
-      if (data.readyToHelp) {
-        const html = createUserCard(data.readyToHelp);
+    //   if (data.readyToHelp) {
+    //     const html = createUserCard(data.readyToHelp);
 
-        document.querySelector('.user-card').innerHTML = html;
-      }
-    }
+    //     document.querySelector('.user-card').innerHTML = html;
+    //   }
+    // }
 
-    setInterval(getData, 1000)
+    // setInterval(getData, 1000)
 
     mapboxgl.accessToken = 'pk.eyJ1Ijoic2Fobmluc2giLCJhIjoiY2tlNzF6OTVvMHFnOTJ6cG85YzN3Z3lhaiJ9.AmfB7dW6dzuLpOse-ryCCQ';
 

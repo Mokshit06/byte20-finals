@@ -62,7 +62,10 @@
         <% } %>
       </div>
 
-      <button class="delete-btn" id="delete">Delete Profile</button>
+      <button class="delete-btn" style="margin-right: 1vw" id="delete">Delete Profile</button>
+      <% if (user.training) { %>
+      <a class="delete-btn" style="background: rgb(255, 196, 0)" href="/drivers/training">Get Certified</a>
+      <% } %>
     </div>
   </div>
 
