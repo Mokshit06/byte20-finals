@@ -11,27 +11,40 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const { hospital, emergencyType } = req.body;
+  const { hospital, condition, symptoms } = req.body;
 
   const driversWithinRange = await Driver.find({
-    'hospitals.hospital': {
+    'hospitals.name': {
       $regex: hospital,
       $options: 'i',
     },
   });
 
+  if (driversWithinRange.length < 1 && condition === 'normal') {
+    res.render('help/index', {
+      error: 'Sorry, no drivers found in that area.',
+    });
+    return;
+  }
+
   if (driversWithinRange.length < 1) {
-    return res.send({
-      message: 'Sorry, no drivers in that area',
+    res.render('help/index', {
+      error:
+        'Sorry, no drivers found in that area. The ambulance should be arriving soon',
     });
   }
 
   const help = await Help.create({
-    emergencyType,
+    emergencyType: condition,
     user: req.user.id,
-    informedUsers: driversWithinRange,
+    informedUsers: driversWithinRange.map(driver => ({
+      driver: driver._id,
+    })),
     hospital,
+    symptoms,
   });
+
+  console.log(help);
 
   driversWithinRange.forEach(driver => {
     sendAlertEmail({
@@ -42,9 +55,7 @@ router.post('/', async (req, res) => {
     });
   });
 
-  res.send({
-    message: 'Your response has been sent to the drivers in that area',
-  });
+  res.redirect(`/help/${help.id}`);
 });
 
 router.get('/:id', async (req, res) => {
@@ -54,7 +65,17 @@ router.get('/:id', async (req, res) => {
     });
   }
 
-  const help = await Help.findById(req.params.id);
+  const help = await Help.findById(req.params.id).populate([
+    {
+      path: 'user',
+    },
+    {
+      path: 'informedUsers.driver',
+    },
+    {
+      path: 'readyToHelp',
+    },
+  ]);
 
   if (!help) {
     return res.status(404).send({
@@ -62,31 +83,46 @@ router.get('/:id', async (req, res) => {
     });
   }
 
-  if (help.user !== req.user) {
+  if (help.user.id != req.user.id) {
     return res.status(404).send({
       message: 'Page not found',
     });
   }
 
+  const informedUsers = help.informedUsers.map(user => user.driver.displayName);
+
   if (req.headers['content-type'] === 'application/json') {
-    return res.send(help.readyToHelp);
+    return res.send({ help });
   }
 
   res.render('help/id', {
     help,
+    informedUsers,
   });
 });
 
 router.get('/:id/do', async (req, res) => {
-  const help = await Help.findById(req.params.id);
+  const help = await Help.findById(req.params.id).populate([
+    {
+      path: 'informedUsers.driver',
+    },
+    {
+      path: 'readyToHelp',
+    },
+  ]);
 
   if (!help) {
     return res.status(404).send({
       message: 'Page not found',
     });
   }
+  const informedUsers = help.informedUsers.map(user => user.driver.displayName);
 
-  if (!help.informedUsers.includes({ name: req.user.id })) {
+  if (
+    !help.informedUsers.some(
+      user => JSON.stringify(user.driver) === JSON.stringify(req.user)
+    )
+  ) {
     return res.status(404).send({
       message: 'Page not found',
     });
@@ -94,6 +130,7 @@ router.get('/:id/do', async (req, res) => {
 
   res.render('help/do', {
     help,
+    informedUsers,
   });
 });
 
@@ -106,15 +143,16 @@ router.post('/:id/do', async (req, res) => {
     });
   }
 
-  if (!help.informedUsers.includes({ name: req.user.id })) {
+  if (!help.informedUsers.some(user => user.driver == req.user.id)) {
     return res.status(404).send({
       message: 'Page not found',
     });
   }
 
-  help.readyToHelp = req.user.id;
+  help.readyToHelp = req.user._id;
 
   await help.save();
+  res.send();
 });
 
 module.exports = router;

@@ -27,15 +27,6 @@ const UserSchema = new mongoose.Schema({
   ],
   address: {
     type: String,
-    required: true,
-  },
-  availableTime: {
-    from: {
-      type: Number,
-    },
-    to: {
-      type: Number,
-    },
   },
   location: [
     {

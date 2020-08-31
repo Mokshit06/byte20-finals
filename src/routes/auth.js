@@ -26,7 +26,10 @@ router.get(
     failureRedirect: '/',
   }),
   (req, res) => {
-    res.redirect('/');
+    if (req.user.hospitals.length > 0 && req.user.address) {
+      res.redirect('/');
+    }
+    res.redirect('/account/profile');
   }
 );
 

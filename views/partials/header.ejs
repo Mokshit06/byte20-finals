@@ -5,13 +5,19 @@
     <div class="line-3"></div>
   </div>
   <div class="logo">
-    <a href="/">RAILR</a>
+    <a href="/">MedPool</a>
   </div>
   <div class="nav-links">
 
+    <% if (user) {  %>
+    <% if (user.location) { %>
     <a href="/help">Request help</a>
+    <% } %>
     <a href="/account/overview">Profile</a>
     <a href="/auth/logout">Logout</a>
+    <% } else { %>
+    <a href="/login">Login</a>
+    <% } %>
 
   </div>
 </nav>

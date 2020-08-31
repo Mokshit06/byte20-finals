@@ -12,9 +12,9 @@ const HelpSchema = new mongoose.Schema({
   },
   informedUsers: [
     {
-      user: {
+      driver: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'Driver',
         required: true,
       },
     },
@@ -26,7 +26,10 @@ const HelpSchema = new mongoose.Schema({
   },
   readyToHelp: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Driver',
+  },
+  symptoms: {
+    type: String,
   },
 });
 

@@ -7,6 +7,10 @@
   background: #f8f8f8;
   min-height: calc(100vh - 7.2vh);
 
+  @media (max-width: 950px) {
+    display: none;
+  }
+
   .center {
     display: flex;
     align-items: center;
@@ -53,6 +57,14 @@
   padding: 2.5rem 3rem;
   width: calc(100% - 27%);
 
+  @media (max-width: 950px) {
+    width: 100%;
+  }
+
+  @media (max-width: 700px) {
+    padding: 1.9rem;
+  }
+
   h1 {
     font-size: 3rem;
     margin-bottom: 1rem;
@@ -71,6 +83,10 @@
     flex-direction: column;
     width: 80%;
     margin-bottom: 5vh;
+
+    @media (max-width: 950px) {
+      width: 100%;
+    }
 
     label {
       display: flex;
@@ -114,30 +130,6 @@
     }
   }
 
-  .user-info {
-    width: 100%;
-    .field {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem;
-      border-bottom: 0.5px solid #e8ebf0;
-
-      p {
-        width: 50%;
-        font-size: 1.2rem;
-      }
-
-      .field-name {
-        color: #a1a6ad;
-      }
-
-      .field-value {
-        color: #3e4958;
-      }
-    }
-  }
-
   .delete-btn {
     margin: 2rem 0;
     background: rgb(255, 69, 69);
@@ -147,5 +139,32 @@
     color: #fff;
     font-size: 1.16rem;
     cursor: pointer;
+  }
+}
+.user-info {
+  width: 100%;
+  .field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 0.5px solid #e8ebf0;
+
+    p {
+      width: 50%;
+      font-size: 1.2rem;
+    }
+
+    .field-name {
+      color: #a1a6ad;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .field-value {
+      color: #3e4958;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 }

@@ -5,21 +5,103 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/style.css">
-  <title>Login</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <script defer src="/js/app.js"></script>
+  <title>Home | MedPool</title>
 </head>
 
-<body class="login-page">
-  <div class="login-form">
-    <div class="logo-area">
-      <div class="logo-img"></div>
+<body class="landing">
+  <%- include('partials/header.ejs') %>
+  <section id="home">
+    <div id="css-moon">
+      <div id="rotate">
+
+        <div id="oval-container">
+          <span class="texture oval t1"></span>
+          <span class="texture oval t2"></span>
+          <span class="texture oval t3"></span>
+          <span class="texture oval t4"></span>
+          <span class="texture oval t5"></span>
+        </div>
+        <div id="circle-container">
+          <span class="texture circle at1"></span>
+          <span class="texture circle at2"></span>
+          <span class="texture circle at3"></span>
+        </div>
+      </div>
     </div>
-    <div class="login-area">
-      <h1>Get moving with Railr</h1>
-      <p>Railr is the fastest way to travel in Sheet Rock Hills</p>
-      <a class="sign-in-btn" href="/auth/google/user">Sign in as a user</a>
-      <a class="sign-in-btn" href="/auth/google/driver">Sign in as a driver</a>
+
+    <div class="content">
+      <h1>MedPool</h1>
+      <p>Health and wellness app, made for the people, by the people and with the people</p>
+      <% if (user && user.location) { %>
+      <a href="/help" class="action">Request help</a>
+      <% } else if (user) { %>
+      <% } else { %>
+      <a href="/login" class="action">Login</a>
+      <% } %>
+    </div>
+  </section>
+  <div class="aboutPage white">
+    <div class="ab">
+      <div class="about-text">
+        <div class="fsize3rem">About MedPool</div>
+        <div class="lorem fsize1rem"> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Explicabo, aliquam? Ad
+          at enim atque, maiores distinctio nisi necessitatibus sequi officia dignissimos cum dicta quas delectus ab
+          repellendus laudantium eius vitae!</div>
+      </div>
+      <div class="about-image"></div>
+    </div>
+
+
+    <div class="ab" style="margin-top: 3vh ;">
+      <div class="about-text" style="width:100%;">
+        <div class="fsize3rem">Our Objective</div>
+        <ul class=" fsize1rem" style="margin-top: 2vh; list-style-position: outside; padding: 0 4vw 0 1vw;">
+          <!-- <ul> -->
+          <li class="lorem"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto harum cupiditate ipsam aut
+            expedita nemo id architecto eligendi ipsa numquam laudantium quae aspernatur, consectetur fugiat dolore
+            perferendis quam ex soluta!</li>
+          <li class="lorem"> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem modi magni, voluptates
+            quod, dignissimos recusandae officiis fugiat praesentium aut consequuntur vitae dolor, voluptatum nostrum
+            magnam! Ab excepturi cum ipsa. Earum.</li>
+          <li class="lorem"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates et facere veritatis
+            nemo nam incidunt qui labore ipsa nulla iure, reprehenderit veniam sunt, repellendus sint sit amet aliquid
+            repellat quo?</li>
+          <!-- </ul> -->
+        </ul>
+      </div>
     </div>
   </div>
+  <div class="blue padding box-container">
+    <div class="box-image image1"></div>
+    <div class="box-text">
+      <div class="box-header fsize3rem">Header</div>
+      <div class="text lorem fsize1rem">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque laborum
+        accusantium dolores et, corrupti, saepe obcaecati, ut adipisci amet sunt quibusdam architecto voluptates quia
+        praesentium labore? Itaque numquam ea perspiciatis!</div>
+    </div>
+  </div>
+  <div class="white padding box-container">
+    <div class="box-image image2" style="order: 2"></div>
+    <div class="box-text">
+      <div class="box-header fsize3rem">Header</div>
+      <div class="text lorem fsize1rem">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque laborum
+        accusantium dolores et, corrupti, saepe obcaecati, ut adipisci amet sunt quibusdam architecto voluptates quia
+        praesentium labore? Itaque numquam ea perspiciatis!</div>
+    </div>
+  </div>
+  <div class="blue padding box-container">
+    <div class="box-image image3"></div>
+    <div class="box-text">
+      <div class="box-header fsize3rem">Header</div>
+      <div class="text lorem fsize1rem">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque laborum
+        accusantium dolores et, corrupti, saepe obcaecati, ut adipisci amet sunt quibusdam architecto voluptates quia
+        praesentium labore? Itaque numquam ea perspiciatis!</div>
+    </div>
+  </div>
+
+  <%- include('partials/footer.ejs') %>
 </body>
 
 </html>

@@ -1,0 +1,8 @@
+{
+  "name": "MedPool | Health App",
+  "short_name": "MedPool",
+  "lang": "en-US",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#111111"
+}

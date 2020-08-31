@@ -63,7 +63,7 @@ nav .nav-links a {
     right: 5%;
     top: 50%;
     transform: translate(-5%, -50%);
-    z-index: 20;
+    z-index: 200;
   }
 
   nav .logo {
@@ -79,7 +79,7 @@ nav .nav-links a {
     background: #276ef1;
     min-height: 100vh;
     width: 100%;
-    margin-top: 46.2vh;
+    margin-top: 46.6vh;
     flex-direction: column;
     clip-path: circle(100px at 90% -13%);
     transition: all 1s ease-out;
@@ -90,6 +90,7 @@ nav .nav-links a {
   nav .nav-links.open {
     clip-path: circle(1000px at 90% -10%);
     pointer-events: all;
+    z-index: 100;
   }
 
   nav .nav-links li {
